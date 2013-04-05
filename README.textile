@@ -126,6 +126,9 @@ from the GCM servers are:
 | |Error: NotRegistered. An existing registration Id has ceased to be valid. The device and all of tis notifications will be deleted.|
 | |Error: MessageTooBig. The total payload data that is in the message exceeds 4096 bytes.|
 
+|Code 400| |
+| |JSON is Invalid. that means the sent json cannot be parsed by google servers|
+
 |Code 401| |
 | |API Key is Invalid. Check the configuration file|
 
