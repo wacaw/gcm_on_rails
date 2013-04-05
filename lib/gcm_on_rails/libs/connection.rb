@@ -34,13 +34,10 @@ module Gcm
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
+        logger.info("Data being sent to GCM servers: #{data}")
         resp = http.post(url.path, data, headers)
 
         return {:code => resp.code.to_i, :message => resp.body }
-      end
-
-      def open
-        configatron.gcm_on_rails.api_key
       end
     end
   end

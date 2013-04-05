@@ -47,7 +47,7 @@ class Gcm::Notification < Gcm::Base
         end
 
         unless notifications.nil? || notifications.empty?
-          api_key = Gcm::Connection.open
+          api_key = configatron.gcm_on_rails.api_key
           if api_key
             notifications.each do |notification|
 
@@ -96,13 +96,13 @@ class Gcm::Notification < Gcm::Base
                     end
                   notification.save!
                 when 400
-                  raise Gcm::Errors::InvalidJSON.new(message_data)
+                  raise Gcm::Errors::InvalidJSON.new(response[:message])
                 when 401
-                  raise Gcm::Errors::InvalidAuthToken.new(message_data)
+                  raise Gcm::Errors::InvalidAuthToken.new(response[:message])
                 when 500
-                  raise Gcm::Errors::InternalServerError.new(message_data)
+                  raise Gcm::Errors::InternalServerError.new(response[:message])
                 when 503
-                  raise Gcm::Errors::ServiceUnavailable.new(message_data)
+                  raise Gcm::Errors::ServiceUnavailable.new(response[:message])
               end
             end
           end
