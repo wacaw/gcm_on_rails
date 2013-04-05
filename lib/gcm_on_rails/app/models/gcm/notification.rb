@@ -96,13 +96,13 @@ class Gcm::Notification < Gcm::Base
                     end
                   notification.save!
                 when 400
-                  raise Gcm::Errors::InvalidJSON.new(response[:message])
+                  raise Gcm::Errors::InvalidJSON.new(response.inspect)
                 when 401
-                  raise Gcm::Errors::InvalidAuthToken.new(response[:message])
+                  raise Gcm::Errors::InvalidAuthToken.new(response.inspect)
                 when 500
-                  raise Gcm::Errors::InternalServerError.new(response[:message])
+                  raise Gcm::Errors::InternalServerError.new(response.inspect)
                 when 503
-                  raise Gcm::Errors::ServiceUnavailable.new(response[:message])
+                  raise Gcm::Errors::ServiceUnavailable.new(response.inspect)
               end
             end
           end
