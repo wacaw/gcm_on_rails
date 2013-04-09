@@ -53,7 +53,7 @@ module Gcm
         resp = http.post(url.path, data, headers)
 
         Rails.logger.warn resp.code.to_i
-        Rails.logger.warn dat
+        Rails.logger.warn data
 
         return {:code => resp.code.to_i, :message => resp.body }
       end
