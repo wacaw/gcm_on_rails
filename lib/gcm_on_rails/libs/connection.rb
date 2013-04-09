@@ -5,6 +5,21 @@ module Gcm
   module Connection
     class << self
       def send_notification(notification, api_key, format)
+        response = {}
+
+        # Google only accepts 1000 registration_ids at a time
+        notification.devices.each_slice(1000) do |slice_devices|
+          notification_for_slice = notification.dup
+          notification_for_slice.devices = slice_devices
+          response = send! notification_for_slice, api_key, format
+        end
+
+        response
+      end
+
+      def send!(notification, api_key, format)
+        Rails.logger.warn notification.to_yaml
+
         if format == 'json'
           headers = {"Content-Type" => "application/json",
                      "Authorization" => "key=#{api_key}"}
@@ -32,6 +47,9 @@ module Gcm
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
         resp, dat = http.post(url.path, data, headers)
+
+        Rails.logger.warn resp.code.to_i
+        Rails.logger.warn dat
 
         return {:code => resp.code.to_i, :message => dat }
       end
