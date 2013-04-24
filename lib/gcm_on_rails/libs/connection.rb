@@ -33,7 +33,11 @@ module Gcm
 
         resp = http.post(url.path, data, headers)
 
-        return {:code => resp.code.to_i, :message => resp.body }
+        return {
+          :code => resp.code.to_i,
+          :message => resp.body,
+          :registration_ids => notification.devices.map{ |d| d.registration_id}
+        }
       end
 
       def open

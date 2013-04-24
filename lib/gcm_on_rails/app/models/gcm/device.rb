@@ -13,7 +13,11 @@ class Gcm::Device < Gcm::Base
 
   attr_accessible :registration_id
 
-  has_and_belongs_to_many :notifications, :class_name => 'Gcm::Notification', :join_table => :gcm_devices_notifications
+  has_and_belongs_to_many :notifications, 
+                          :class_name => 'Gcm::Notification', 
+                          :join_table => :gcm_devices_notifications, 
+                          :dependent => :destroy
+                          
   validates_presence_of :registration_id
   validates_uniqueness_of :registration_id
 
